@@ -1,4 +1,6 @@
-﻿using GameOfLife.Hubs;
+﻿using GameOfLife.Dtos;
+using GameOfLife.Hubs;
+using GameOfLife.Services.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,12 +17,18 @@ namespace GameOfLife.HostedService
         private readonly ILogger _logger;
         private Timer _timer;
         private readonly IHubContext<GameNotifier> _hubContext;
+        private readonly IGamestatusService _gamestatusService;
+        private readonly IGameEvolutionService _gameEvolutionService;
         public TimedHostedService(ILogger<TimedHostedService> logger,
-            IHubContext<GameNotifier> hubContext
+            IHubContext<GameNotifier> hubContext,
+            IGamestatusService gamestatusService,
+            IGameEvolutionService gameEvolutionService
             )
         {
             _logger = logger;
             _hubContext = hubContext;
+            _gamestatusService = gamestatusService;
+            _gameEvolutionService = gameEvolutionService;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -33,7 +41,9 @@ namespace GameOfLife.HostedService
 
         private async Task DoWorkAsync(object state)
         {
-            await _hubContext.Clients.All.SendAsync("Notify", "TODO-GAME-STATUS");
+            GameStatusDto gameStatus = await _gamestatusService.GetGameStatusAsync();
+            GameStatusDto nextGeneration = _gameEvolutionService.Evolve();
+            await _hubContext.Clients.All.SendAsync("Notify", nextGeneration);
             _logger.LogInformation("Timed Background Service is working.");
         }
 

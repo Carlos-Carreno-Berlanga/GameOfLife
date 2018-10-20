@@ -7,6 +7,8 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <UserSecretsId>91270a7b-30c8-4acd-afdb-6339a154855a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
   </ItemGroup>
 
   <ItemGroup>
