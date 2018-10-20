@@ -3,8 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/WeatherForecasts';
-
+import { HubConnectionBuilder } from '@aspnet/signalr';
+let hubConnection = null;
 class FetchData extends Component {
+    constructor() {
+        super();
+        this.handleNotification();
+    }
   componentWillMount() {
     // This method runs when the component is first added to the page
     const startDateIndex = parseInt(this.props.match.params.startDateIndex, 10) || 0;
@@ -15,7 +20,25 @@ class FetchData extends Component {
     // This method runs when incoming props (e.g., route params) change
     const startDateIndex = parseInt(nextProps.match.params.startDateIndex, 10) || 0;
     this.props.requestWeatherForecasts(startDateIndex);
-  }
+    }
+
+    handleNotification() {
+        if (hubConnection) {
+            console.log("unsuscribe");
+            hubConnection.off("Notify");
+            hubConnection = null;
+        }
+
+        hubConnection = new HubConnectionBuilder()
+            .withUrl('/GameNotifier')
+            .build();
+
+        hubConnection.on("Notify", (data) => {
+            console.log("Notify", data);
+
+        });
+        hubConnection.start();
+    }
 
   render() {
     return (

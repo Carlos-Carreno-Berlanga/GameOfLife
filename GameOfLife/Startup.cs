@@ -1,3 +1,5 @@
+using GameOfLife.HostedService;
+using GameOfLife.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -20,6 +22,7 @@ namespace GameOfLife
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR(); // <-- SignalR
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -27,6 +30,7 @@ namespace GameOfLife
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddHostedService<TimedHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +49,10 @@ namespace GameOfLife
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseSignalR(routes =>  // <-- SignalR
+            {
+                routes.MapHub<GameNotifier>("/GameNotifier");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
