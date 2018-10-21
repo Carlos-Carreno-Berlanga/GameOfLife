@@ -78,7 +78,7 @@ namespace GameOfLife
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }

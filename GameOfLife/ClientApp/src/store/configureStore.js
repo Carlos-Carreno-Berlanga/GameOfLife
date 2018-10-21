@@ -1,14 +1,10 @@
 ﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import * as Counter from './Counter';
-import * as WeatherForecasts from './WeatherForecasts';
 import * as GameOfLifePage from './GameOfLifePage';
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    counter: Counter.reducer,
-      weatherForecasts: WeatherForecasts.reducer,
       gameOfLifePage: GameOfLifePage.reducer
   };
 
