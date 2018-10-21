@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { HubConnectionBuilder } from '@aspnet/signalr';
 
 import { actionCreators } from '../store/GameOfLifePage';
+import Grid from './Grid';
 let hubConnection = null;
 class GameOfLifePage extends Component {
     constructor() {
@@ -31,15 +32,27 @@ class GameOfLifePage extends Component {
     }
 
     render() {
-        return (
-            <div>HOLA</div>
-        );
+        console.log("this.props.gameStatus", this.props.gameStatus);
+        if (this.props.gameStatus && this.props.gameStatus.board) {
+            return (
+                <Grid
+                    rows={70}
+                    cols={70}
+                    gridFull={this.props.gameStatus.board}
+                />
+            );
+        }
+        else {
+            return (
+                <span>LOADING</span>
+                );
+        }
     }
 
 
 }
 
 export default connect(
-    state => state.gameOfLife,
+    state => state.gameOfLifePage,
     dispatch => bindActionCreators(actionCreators, dispatch)
 )(GameOfLifePage);
