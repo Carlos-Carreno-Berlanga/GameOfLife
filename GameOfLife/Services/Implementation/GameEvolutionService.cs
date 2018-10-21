@@ -9,10 +9,13 @@ namespace GameOfLife.Services.Implementation
 {
     public class GameEvolutionService : IGameEvolutionService
     {
-        public GameStatusDto Evolve()
+        public GameStatusDto Evolve(GameStatusDto currentGameStatus)
         {
             //throw new NotImplementedException();
-            return new GameStatusDto();
+            int nextGeneration = currentGameStatus.Generation + 1;
+            //bool[,] nextBoard = new bool[currentGameStatus.Columns, currentGameStatus.Rows];
+            GameStatusDto nextGameStatus= new GameStatusDto(currentGameStatus.Columns, currentGameStatus.Rows, currentGameStatus.Board, nextGeneration);
+            return nextGameStatus;
         }
     }
 }

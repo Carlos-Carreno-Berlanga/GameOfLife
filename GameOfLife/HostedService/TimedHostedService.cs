@@ -42,7 +42,8 @@ namespace GameOfLife.HostedService
         private async Task DoWorkAsync(object state)
         {
             GameStatusDto gameStatus = await _gamestatusService.GetGameStatusAsync();
-            GameStatusDto nextGeneration = _gameEvolutionService.Evolve();
+            GameStatusDto nextGeneration = _gameEvolutionService.Evolve(gameStatus);
+            await _gamestatusService.SetGameStatusAsync(nextGeneration);
             await _hubContext.Clients.All.SendAsync("Notify", nextGeneration);
             _logger.LogInformation("Timed Background Service is working.");
         }

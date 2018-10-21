@@ -8,7 +8,7 @@ namespace GameOfLife.Services.Interfaces
 {
     public interface IGameEvolutionService
     {
-        GameStatusDto Evolve();
+        GameStatusDto Evolve(GameStatusDto currentGameStatus);
         
     }
 }

@@ -2,16 +2,22 @@
 {
     public class GameStatusDto
     {
-        public GameStatusDto()
-        {
-
-        }
-        public GameStatusDto(int columns, int rows)
+        public GameStatusDto(int columns, int rows, bool[,] board, int generation)
         {
             Rows = rows;
             Columns = columns;
-            Board = new bool[columns, rows];
+            Board = board;
+            Generation = generation;
+
         }
+
+        //public GameStatusDto(int columns, int rows)
+        //{
+        //    Rows = rows;
+        //    Columns = columns;
+        //    Board = new bool[columns, rows];
+        //    Generation = 0;
+        //}
 
         public void Evolve()
         {

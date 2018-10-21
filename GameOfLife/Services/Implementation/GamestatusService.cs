@@ -3,9 +3,8 @@ using GameOfLife.Services.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using static GameOfLife.Constants.AppConstants;
 
 namespace GameOfLife.Services.Implementation
 {
@@ -17,19 +16,36 @@ namespace GameOfLife.Services.Implementation
         {
             _distributedCache = distributedCache;
         }
+
+        private bool getBooleanRandom()
+        {
+            Random gen = new Random();
+            int prob = gen.Next(100);
+            return prob <= 50;
+        }
+
         public async Task<GameStatusDto> GetGameStatusAsync()
         {
             await _distributedCache.GetStringAsync(cacheKey);
             string gameStatusString = await _distributedCache.GetStringAsync(cacheKey);
             if (string.IsNullOrEmpty(gameStatusString))
             {
-                await SetGameStatusAsync(new GameStatusDto(1, 2));
+                bool[,] randomBoard = new bool[boardColumns, boardRows];
+                for(int i = 0; i < randomBoard.GetLength(0); i++)
+                {
+                    for(int j=0; j<randomBoard.GetLength(1);j++)
+                    {
+                        randomBoard[i, j] = getBooleanRandom();
+                    }
+                }
+               GameStatusDto initialGame = new GameStatusDto(boardColumns, boardRows, randomBoard, 0);
+                await SetGameStatusAsync(initialGame);
+                return initialGame;
             }
-            else
-            {
-                JsonConvert.DeserializeObject<GameStatusDto>(gameStatusString);
-            }
-            return new GameStatusDto(1, 2);
+
+            GameStatusDto gameStatus = JsonConvert.DeserializeObject<GameStatusDto>(gameStatusString);
+            return gameStatus;
+
         }
 
         public async Task SetGameStatusAsync(GameStatusDto gameStatus)
