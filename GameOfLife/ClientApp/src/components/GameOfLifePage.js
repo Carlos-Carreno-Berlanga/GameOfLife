@@ -2,10 +2,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { HubConnectionBuilder } from '@aspnet/signalr';
+import RingLoader from 'react-spinners/RingLoader';
 
 import { actionCreators } from '../store/GameOfLifePage';
 import Grid from './Grid';
 let hubConnection = null;
+
 class GameOfLifePage extends Component {
     constructor() {
         super();
@@ -32,20 +34,30 @@ class GameOfLifePage extends Component {
     }
 
     render() {
-        console.log("this.props.gameStatus", this.props.gameStatus);
+
         if (this.props.gameStatus && this.props.gameStatus.board) {
             return (
-                <Grid
-                    rows={70}
-                    cols={70}
-                    gridFull={this.props.gameStatus.board}
-                />
+                <div>
+                    <h1 className="text-center text-primary">Generation {this.props.gameStatus.generation}</h1>
+                    <Grid
+                        rows={40}
+                        cols={60}
+                        gridFull={this.props.gameStatus.board}
+                    />
+                </div>
             );
         }
         else {
             return (
-                <span>LOADING</span>
-                );
+                <div id="loading">
+                    <RingLoader
+                        sizeUnit={"px"}
+                        size={150}
+                        color={'#123abc'}
+                        loading={true}
+                    />
+                </div>
+            );
         }
     }
 

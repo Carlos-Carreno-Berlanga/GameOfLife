@@ -15,8 +15,8 @@ namespace GameOfLife.Services.Implementation
             int nextGeneration = currentGameStatus.Generation + 1;
             //bool[,] nextBoard = new bool[currentGameStatus.Columns, currentGameStatus.Rows];
             bool[,] nextBoard = (bool[,])currentGameStatus.Board.Clone();
-            int cols = currentGameStatus.Board.GetLength(0);
-            int rows = currentGameStatus.Board.GetLength(1);
+            int cols = currentGameStatus.Board.GetLength(1);
+            int rows = currentGameStatus.Board.GetLength(0);
             for (int i = 0; i < currentGameStatus.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < currentGameStatus.Board.GetLength(1); j++)

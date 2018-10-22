@@ -2,7 +2,7 @@
 {
     public static class AppConstants
     {
-        public const int boardColumns = 70;
-        public const int boardRows = 70;
+        public const int boardColumns = 60;
+        public const int boardRows = 40;
     }
 }
