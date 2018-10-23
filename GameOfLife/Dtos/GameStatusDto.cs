@@ -2,7 +2,7 @@
 {
     public class GameStatusDto
     {
-        public GameStatusDto(int columns, int rows, bool[,] board, int generation)
+        public GameStatusDto(int columns, int rows, string[,] board, int generation)
         {
             Rows = rows;
             Columns = columns;
@@ -11,21 +11,9 @@
 
         }
 
-        //public GameStatusDto(int columns, int rows)
-        //{
-        //    Rows = rows;
-        //    Columns = columns;
-        //    Board = new bool[columns, rows];
-        //    Generation = 0;
-        //}
-
-        public void Evolve()
-        {
-
-        }
         public int Generation { get; set; }
         public int Columns { get; set; }
         public int Rows { get; set; }
-        public bool[,] Board { get; set; }
+        public string[,] Board { get; set; }
     }
 }

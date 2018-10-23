@@ -30,12 +30,22 @@ namespace GameOfLife.Services.Implementation
             string gameStatusString = await _distributedCache.GetStringAsync(cacheKey);
             if (string.IsNullOrEmpty(gameStatusString))
             {
-                bool[,] randomBoard = new bool[boardColumns, boardRows];
+                string[,] randomBoard = new string[boardColumns, boardRows];
                 for(int i = 0; i < randomBoard.GetLength(0); i++)
                 {
                     for(int j=0; j<randomBoard.GetLength(1);j++)
                     {
-                        randomBoard[i, j] = getBooleanRandom();
+                        //randomBoard[i, j] = "#47af22";
+                        Console.WriteLine($"i=>{i} j=>{j}");
+                        if (getBooleanRandom())
+                        {
+                            randomBoard[i, j] = "#47af22";
+                        }
+                        else
+                        {
+                            randomBoard[i, j] = null;
+                        }
+
                     }
                 }
                GameStatusDto initialGame = new GameStatusDto(boardColumns, boardRows, randomBoard, 0);
