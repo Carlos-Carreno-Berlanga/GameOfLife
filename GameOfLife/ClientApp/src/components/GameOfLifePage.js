@@ -42,16 +42,19 @@ class GameOfLifePage extends Component {
         if (this.props.gameStatus && this.props.gameStatus.board) {
             return (
                 <div className="container-fluid">
-
-                    <h1 className="text-center text-primary pb-2">Generation {this.props.gameStatus.generation}</h1>
-
-                    <Grid
-                        rows={this.props.gameStatus.rows}
-                        cols={this.props.gameStatus.columns}
-                        gridFull={this.props.gameStatus.board}
-                    />
-                    <Toolbar />
-
+                    <div className="row">
+                        <div className="col-6 offset-3">
+                            <h1 className="text-center text-primary pb-2">Generation {this.props.gameStatus.generation}</h1>
+                        </div>
+                        <Grid
+                            rows={this.props.gameStatus.rows}
+                            cols={this.props.gameStatus.columns}
+                            gridFull={this.props.gameStatus.board}
+                        />
+                        <div className="col-3">
+                            <Toolbar />
+                        </div>
+                    </div>
                 </div>
             );
         }

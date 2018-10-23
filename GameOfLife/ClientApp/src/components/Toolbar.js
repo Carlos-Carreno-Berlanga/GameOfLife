@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿    import React, { Component } from 'react';
 import Block from '../images/block.svg';
 import Blinker from '../images/blinker.gif';
 import Glider from '../images/glider.gif';
@@ -10,23 +10,23 @@ class Toolbar extends Component {
 
     render() {
         return (
-            <div className="btn-group d-flex justify-content-center pt-3" role="group" >
-
-                <button type="button" className="btn btn-secondary btn-lg">
+            <div className="d-flex justify-content-center flex-column align-items-stretch" role="group" >
+                <button type="button" className="btn btn-secondary my-2">
                     Block
                     <p />
-                    <img className="rounded mx-auto d-block" src={Block} />
+                    <img className="rounded mx-auto" src={Block} />
                 </button>
-                <button type="button" className="btn btn-secondary">
+                <button type="button" className="btn btn-secondary my-2">
                     Blinker
                     <p />
                     <img className="rounded mx-auto d-block" src={Blinker} />
                 </button>
-                <button type="button" className="btn btn-secondary">Glider
+                <button type="button" className="btn btn-secondary my-2">
+                    Glider
                     <p />
                     <img className="rounded mx-auto d-block" src={Glider} />
                 </button>
-                <button type="button" className="btn btn-secondary">
+                <button type="button" className="btn btn-secondary my-2">
                     Lightweight spaceship
                     <p />
                     <img className="rounded mx-auto d-block" src={Lwss} />
