@@ -36,46 +36,49 @@ class GameOfLifePage extends Component {
     }
 
     render() {
-
+        console.log("this.props", this.props);
         if (this.props.gameStatus && this.props.gameStatus.board) {
             return (
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-4 offset-3">
-                            <h1 className="text-center text-primary pb-2">Generation {this.props.gameStatus.generation}</h1>
+                            <h1 className="text-center  pb-2">
+                                <span className="text-primary">Generation {this.props.gameStatus.generation}  </span>
+                                <span className="w-10 text-secondary" style={{ backgroundColor: this.props.userColor }} > User  </span>
+                                    </h1>
                         </div>
-                        <Grid
-                            rows={this.props.gameStatus.rows}
-                            cols={this.props.gameStatus.columns}
-                            gridFull={this.props.gameStatus.board}
-                        />
-                        <div className="col-5">
-                            <LifeformToolbar
-                                selectLifeform={this.props.setLifeformName}
+                            <Grid
+                                rows={this.props.gameStatus.rows}
+                                cols={this.props.gameStatus.columns}
+                                gridFull={this.props.gameStatus.board}
                             />
+                            <div className="col-5">
+                                <LifeformToolbar
+                                    selectLifeform={this.props.setLifeformName}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
-        }
+                    );
+                }
         else {
             return (
                 <div id="loading">
-                    <RingLoader
-                        sizeUnit={"px"}
-                        size={150}
-                        color={'#123abc'}
-                        loading
-                    />
-                </div>
-            );
+                        <RingLoader
+                            sizeUnit={"px"}
+                            size={150}
+                            color={'#123abc'}
+                            loading
+                        />
+                    </div>
+                    );
+                }
+            }
+        
+        
         }
-    }
-
-
-}
-
-export default connect(
-    state => state.gameOfLifePage,
-    dispatch => bindActionCreators(actionCreators, dispatch)
-)(GameOfLifePage);
+        
+        export default connect(
+            state => state.gameOfLifePage,
+            dispatch => bindActionCreators(actionCreators, dispatch)
+        )(GameOfLifePage);

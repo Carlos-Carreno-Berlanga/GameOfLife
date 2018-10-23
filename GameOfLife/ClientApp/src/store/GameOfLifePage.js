@@ -1,6 +1,8 @@
-﻿const receiveGameStatusType = 'RECEIVE_GAME_STATUS';
+﻿import * as chroma from 'chroma-js';
+
+const receiveGameStatusType = 'RECEIVE_GAME_STATUS';
 const setLifeformNameType = 'SET_LIFEFORM_NAME';
-const initialState = { gameStatus: null, lifeformName: 'pixel' };
+const initialState = { gameStatus: null, lifeformName: 'pixel', userColor: chroma.random().hex() };
 
 export const actionCreators = {
     receiveGameStatus: (gameStatus) => ({ type: receiveGameStatusType, gameStatus }),
