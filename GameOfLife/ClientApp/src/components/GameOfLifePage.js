@@ -6,9 +6,7 @@ import RingLoader from 'react-spinners/RingLoader';
 
 import { actionCreators } from '../store/GameOfLifePage';
 import Grid from './Grid';
-import Toolbar from './Toolbar';
-import Block from '../images/block.svg';
-import Blinker from '../images/blinker.gif';
+import LifeformToolbar from './LifeformToolbar';
 
 let hubConnection = null;
 
@@ -30,9 +28,9 @@ class GameOfLifePage extends Component {
             .build();
 
         hubConnection.on("Notify", (data) => {
-            console.log("Notify", data);
+            //console.log("Notify", data);
             this.props.receiveGameStatus(data);
-
+            //this.props.setLifeformName("HOLA");
         });
         hubConnection.start();
     }
@@ -43,7 +41,7 @@ class GameOfLifePage extends Component {
             return (
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-6 offset-3">
+                        <div className="col-4 offset-3">
                             <h1 className="text-center text-primary pb-2">Generation {this.props.gameStatus.generation}</h1>
                         </div>
                         <Grid
@@ -51,8 +49,10 @@ class GameOfLifePage extends Component {
                             cols={this.props.gameStatus.columns}
                             gridFull={this.props.gameStatus.board}
                         />
-                        <div className="col-3">
-                            <Toolbar />
+                        <div className="col-5">
+                            <LifeformToolbar
+                                selectLifeform={this.props.setLifeformName}
+                            />
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ class GameOfLifePage extends Component {
                         sizeUnit={"px"}
                         size={150}
                         color={'#123abc'}
-                        loading={true}
+                        loading
                     />
                 </div>
             );

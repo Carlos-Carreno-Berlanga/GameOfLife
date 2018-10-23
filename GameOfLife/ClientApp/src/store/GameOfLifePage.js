@@ -1,8 +1,10 @@
 ﻿const receiveGameStatusType = 'RECEIVE_GAME_STATUS';
-const initialState = { gameStatus: null };
+const setLifeformNameType = 'SET_LIFEFORM_NAME';
+const initialState = { gameStatus: null, lifeformName: 'pixel' };
 
 export const actionCreators = {
-    receiveGameStatus: (gameStatus) => ({ type: receiveGameStatusType, gameStatus })
+    receiveGameStatus: (gameStatus) => ({ type: receiveGameStatusType, gameStatus }),
+    setLifeformName: (name) => ({ type: setLifeformNameType, name })
 };
 
 export const reducer = (state, action) => {
@@ -14,6 +16,11 @@ export const reducer = (state, action) => {
             gameStatus: action.gameStatus
         };
     }
-
+    if (action.type === setLifeformNameType) {
+        return {
+            ...state,
+            lifeformName: action.name
+        };
+    }
     return state;
 };
