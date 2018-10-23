@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { HubConnectionBuilder } from '@aspnet/signalr';
@@ -6,6 +6,10 @@ import RingLoader from 'react-spinners/RingLoader';
 
 import { actionCreators } from '../store/GameOfLifePage';
 import Grid from './Grid';
+import Toolbar from './Toolbar';
+import Block from '../images/block.svg';
+import Blinker from '../images/blinker.gif';
+
 let hubConnection = null;
 
 class GameOfLifePage extends Component {
@@ -37,13 +41,17 @@ class GameOfLifePage extends Component {
 
         if (this.props.gameStatus && this.props.gameStatus.board) {
             return (
-                <div>
-                    <h1 className="text-center text-primary">Generation {this.props.gameStatus.generation}</h1>
+                <div className="container-fluid">
+
+                    <h1 className="text-center text-primary pb-2">Generation {this.props.gameStatus.generation}</h1>
+
                     <Grid
-                        rows={40}
-                        cols={60}
+                        rows={this.props.gameStatus.rows}
+                        cols={this.props.gameStatus.columns}
                         gridFull={this.props.gameStatus.board}
                     />
+                    <Toolbar />
+
                 </div>
             );
         }
