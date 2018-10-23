@@ -1,4 +1,5 @@
-﻿using GameOfLife.Services.Interfaces;
+﻿using GameOfLife.ResourceObjects;
+using GameOfLife.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace GameOfLife.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateGameStatusAsync()
+        public async Task<IActionResult> UpdateGameStatusAsync([FromBody]CreateLifeformResourceObject createLifeformResourceObject)
         {
-            _gamestatusService.SetGameStatusAsync(null);
+            //_gamestatusService.SetGameStatusAsync(null);
             //ReportDTO report = await _assetManagementPipeMaterialService.UpsertReportAsync(upsertReportResourceObject.ToUpsertReportCommand());
             return Ok();
         }

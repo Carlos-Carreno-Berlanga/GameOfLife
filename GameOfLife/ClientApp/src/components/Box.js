@@ -4,6 +4,7 @@ import '../index.css';
 class Box extends Component {
     selectBox = () => {
         this.props.selectBox(this.props.row, this.props.col);
+
     }
 
     render() {

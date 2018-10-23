@@ -20,7 +20,7 @@ class Grid extends Component {
                         boxId={boxId}
                         row={i}
                         col={j}
-                        selectBox={this.props.selectBox}
+                        selectBox={this.props.handleLifeformCreation}
                     />
                 );
             }
