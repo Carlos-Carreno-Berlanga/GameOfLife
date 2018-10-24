@@ -11,18 +11,17 @@ namespace GameOfLife.Controllers
     [Route("api/[controller]")]
     public class GameStatusController : Controller
     {
-        private readonly IGamestatusService _gamestatusService;
-        public GameStatusController(IGamestatusService gamestatusService)
+        private readonly IGameEvolutionService _gameEvolutionService;
+        public GameStatusController(IGameEvolutionService gameEvolutionService)
         {
-            _gamestatusService = gamestatusService;
+            _gameEvolutionService = gameEvolutionService;
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateGameStatusAsync([FromBody]CreateLifeformResourceObject createLifeformResourceObject)
         {
-            //_gamestatusService.SetGameStatusAsync(null);
-            //ReportDTO report = await _assetManagementPipeMaterialService.UpsertReportAsync(upsertReportResourceObject.ToUpsertReportCommand());
-            return Ok();
+            var result = await _gameEvolutionService.ApplyLifeFormAsync(createLifeformResourceObject);
+            return Ok(result);
         }
     }
 }

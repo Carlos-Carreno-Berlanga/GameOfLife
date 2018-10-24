@@ -36,7 +36,7 @@ namespace GameOfLife.HostedService
             _logger.LogInformation("Timed Background Service is starting.");
 
             _timer = new Timer(async o => await DoWorkAsync(o), null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(1));
         }
 
         private async Task DoWorkAsync(object state)

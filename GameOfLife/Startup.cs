@@ -28,6 +28,7 @@ namespace GameOfLife
             //Add Dependency Injection Here.
             services.AddSingleton<IGameEvolutionService, GameEvolutionService>();
             services.AddSingleton<IGamestatusService, GamestatusService>();
+            services.AddSingleton<ILifeformFactory, LifeformFactory>();
             services.AddHostedService<TimedHostedService>();
             //End of Dependency Injection
             services.AddSignalR(); // <-- SignalR

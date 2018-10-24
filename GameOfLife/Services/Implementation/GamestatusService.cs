@@ -35,11 +35,9 @@ namespace GameOfLife.Services.Implementation
                 {
                     for(int j=0; j<randomBoard.GetLength(1);j++)
                     {
-                        //randomBoard[i, j] = "#47af22";
-                        Console.WriteLine($"i=>{i} j=>{j}");
                         if (getBooleanRandom())
                         {
-                            randomBoard[i, j] = "#47af22";
+                            randomBoard[i, j] = defaultCellColor;
                         }
                         else
                         {

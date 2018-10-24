@@ -53,19 +53,20 @@ class GameOfLifePage extends Component {
             return (
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-4 offset-3">
+                        <div className="col-9">
                             <h1 className="text-center  pb-2">
                                 <span className="text-primary">Generation {this.props.gameStatus.generation}  </span>
                                 <span className="w-10 text-secondary" style={{ backgroundColor: this.props.userColor }} > User  </span>
                             </h1>
                         </div>
                         <Grid
+                             
                             rows={this.props.gameStatus.rows}
                             cols={this.props.gameStatus.columns}
                             gridFull={this.props.gameStatus.board}
                             handleLifeformCreation={this.handleLifeformCreation}
                         />
-                        <div className="col-5">
+                        <div className="col-3">
                             <LifeformToolbar
                                 selectLifeform={this.props.setLifeformName}
                             />

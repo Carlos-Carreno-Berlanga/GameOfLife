@@ -37,11 +37,17 @@ body {
 }
 
 .grid {
-    width: 150px;
     line-height: 0;
     margin: auto;
     box-shadow: 0px 0px 20px white;
     margin-top: 20px;
+}
+
+.cell:hover {
+    background-color: #00CCFF !important;
+}
+.cell {
+    border-color: red;
 }
 
 #loading {

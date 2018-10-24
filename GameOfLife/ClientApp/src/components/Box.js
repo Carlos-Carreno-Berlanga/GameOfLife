@@ -10,9 +10,10 @@ class Box extends Component {
     render() {
         return (
             <div
-                className={this.props.boxClass}
+                className="box"
                 id={this.props.id}
                 onClick={this.selectBox}
+                style={{ backgroundColor: this.props.color ? this.props.color : 'lightgray'}}
             />
         );
     }
