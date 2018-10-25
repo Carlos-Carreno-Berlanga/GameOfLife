@@ -28,7 +28,7 @@ class Grid extends Component {
         }
 
         return (
-            <div >
+            <div className="grid ml-5">
                 <table>
                     <tbody>
                         {this.props.gridFull.map((variable, indexCol) =>

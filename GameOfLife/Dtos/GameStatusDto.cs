@@ -2,7 +2,7 @@
 {
     public class GameStatusDto
     {
-        public GameStatusDto(int columns, int rows, string[,] board, int generation)
+        public GameStatusDto(int columns, int rows, string[,] board, uint generation)
         {
             Rows = rows;
             Columns = columns;
@@ -11,7 +11,7 @@
 
         }
 
-        public int Generation { get; set; }
+        public uint Generation { get; set; }
         public int Columns { get; set; }
         public int Rows { get; set; }
         public string[,] Board { get; set; }

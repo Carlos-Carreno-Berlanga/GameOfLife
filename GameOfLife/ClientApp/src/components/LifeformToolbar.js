@@ -14,22 +14,22 @@ class LifeformToolbar extends Component {
                 <button type="button" className="btn btn-secondary my-2" onClick={() => this.props.selectLifeform('Block')}>
                     Block
                     <p />
-                    <img className="rounded mx-auto" src={Block} />
+                    <img className="rounded mx-auto img-fluid" src={Block} />
                 </button>
                 <button type="button" className="btn btn-secondary my-2" onClick={() => this.props.selectLifeform('Blinker')}>
                     Blinker
                     <p />
-                    <img className="rounded mx-auto d-block" src={Blinker} />
+                    <img className="rounded mx-auto img-fluid" src={Blinker} />
                 </button>
                 <button type="button" className="btn btn-secondary my-2" onClick={() => this.props.selectLifeform('Glider')}>
                     Glider
                     <p />
-                    <img className="rounded mx-auto d-block" src={Glider} />
+                    <img className="rounded mx-auto img-fluid" src={Glider} />
                 </button>
                     <button type="button" className="btn btn-secondary my-2" onClick={() => this.props.selectLifeform('LWSS')}>
                     Lightweight spaceship
                     <p />
-                        <img className="rounded mx-auto d-block" src={Lwss} />
+                    <img className="rounded mx-auto img-fluid" src={Lwss} />
                 </button>
             </div >
         );
