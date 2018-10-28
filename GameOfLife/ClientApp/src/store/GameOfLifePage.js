@@ -22,6 +22,8 @@ export const actionCreators = {
             },
             body: JSON.stringify(createLifeFormRequest)
         });
+        const newGameStatus = await response.json();
+        dispatch({ type: receiveGameStatusType, gameStatus: newGameStatus });
     }
 };
 

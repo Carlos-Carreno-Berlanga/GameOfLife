@@ -1,8 +1,9 @@
 ﻿using GameOfLife.Dtos;
 using GameOfLife.ResourceObjects;
 using GameOfLife.Services.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using static GameOfLife.Constants.AppConstants;
 
 namespace GameOfLife.Services.Implementation
 {
@@ -16,48 +17,71 @@ namespace GameOfLife.Services.Implementation
             _gamestatusService = gamestatusService;
             _lifeformFactory = lifeformFactory;
         }
+
+        private void increaseColorCounter(SortedDictionary<string, int> colorCounterDictionary, string color)
+        {
+            if (!colorCounterDictionary.ContainsKey(color))
+            {
+                colorCounterDictionary.Add(color, 1);
+            }
+            else
+            {
+                colorCounterDictionary[color]++;
+            }
+        }
+
         public GameStatusDto Evolve(GameStatusDto currentGameStatus)
         {
             uint nextGeneration = currentGameStatus.Generation + 1;
             string[,] nextBoard = (string[,])currentGameStatus.Board.Clone();
             int cols = currentGameStatus.Board.GetLength(0);
             int rows = currentGameStatus.Board.GetLength(1);
+            
             for (int i = 0; i < currentGameStatus.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < currentGameStatus.Board.GetLength(1); j++)
                 {
                     int count = 0;
+                    SortedDictionary<string, int> colorCounterDictionary = new SortedDictionary<string, int>();
                     if (i > 0 && !string.IsNullOrEmpty(currentGameStatus.Board[i - 1, j]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i - 1, j]);
                     }
                     if (i > 0 && j > 0 && !string.IsNullOrEmpty(currentGameStatus.Board[i - 1, j - 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i - 1, j - 1]);
                     }
                     if (i > 0 && j < rows - 1 && !string.IsNullOrEmpty(currentGameStatus.Board[i - 1, j + 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i - 1, j + 1]);
                     }
                     if (j < rows - 1 && !string.IsNullOrEmpty(currentGameStatus.Board[i, j + 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i, j + 1]);
                     }
                     if (j > 0 && !string.IsNullOrEmpty(currentGameStatus.Board[i, j - 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i, j - 1]);
                     }
                     if (i < cols - 1 && !string.IsNullOrEmpty(currentGameStatus.Board[i + 1, j]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i + 1, j]);
                     }
                     if (i < cols - 1 && j > 0 && !string.IsNullOrEmpty(currentGameStatus.Board[i + 1, j - 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i + 1, j - 1]);
                     }
                     if (i < cols - 1 && j < rows - 1 && !string.IsNullOrEmpty(currentGameStatus.Board[i + 1, j + 1]))
                     {
                         count++;
+                        increaseColorCounter(colorCounterDictionary, currentGameStatus.Board[i + 1, j + 1]);
                     }
                     if (!string.IsNullOrEmpty(currentGameStatus.Board[i, j]) && (count < 2 || count > 3))
                     {
@@ -65,7 +89,8 @@ namespace GameOfLife.Services.Implementation
                     }
                     if (string.IsNullOrEmpty(currentGameStatus.Board[i, j]) && count == 3)
                     {
-                        nextBoard[i, j] = defaultCellColor;
+                        //neighbour's most common color
+                        nextBoard[i, j] = colorCounterDictionary.Keys.First();
                     }
                 }
             }
