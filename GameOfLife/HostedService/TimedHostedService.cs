@@ -11,40 +11,44 @@ using System.Threading.Tasks;
 
 namespace GameOfLife.HostedService
 {
-    internal class TimedHostedService : IHostedService, IDisposable
+    public class TimedHostedService : IHostedService, IDisposable
     {
-        private readonly ILogger _logger;
-        private Timer _timer;
+        private readonly ILogger<TimedHostedService> _logger;
         private readonly IHubContext<GameNotifier> _hubContext;
-        private readonly IServiceScopeFactory _scopeFactory;
+        public readonly IServiceProvider _services;
         public TimedHostedService(ILogger<TimedHostedService> logger,
             IHubContext<GameNotifier> hubContext,
-            IServiceScopeFactory scopeFactory
+            IServiceProvider services
             )
         {
             _logger = logger;
             _hubContext = hubContext;
-            _scopeFactory = scopeFactory;
+            _services = services;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Timed Background Service is starting.");
-
-            _timer = new Timer(async o => await DoWorkAsync(o), null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(10));
+            while (true)
+            {
+                _logger.LogInformation("Timed Background Service is starting.");
+                await DoWorkAsync();
+                await Task.Delay(1000); 
+            }
         }
 
-        private async Task DoWorkAsync(object state)
+        public async Task DoWorkAsync()
         {
-            using (var scope = _scopeFactory.CreateScope())
+            using (var scope = _services.CreateScope())
             {
                 IGamestatusService _gamestatusService = scope.ServiceProvider.GetRequiredService<IGamestatusService>();
                 IGameEvolutionService _gameEvolutionService = scope.ServiceProvider.GetRequiredService<IGameEvolutionService>();
                 GameStatusDto gameStatus = await _gamestatusService.GetGameStatusAsync();
                 GameStatusDto nextGeneration = _gameEvolutionService.Evolve(gameStatus);
                 await _gamestatusService.SetGameStatusAsync(nextGeneration);
-                await _hubContext.Clients.All.SendAsync("Notify", nextGeneration);
+                if (_hubContext?.Clients?.All != null)
+                {
+                    await _hubContext?.Clients?.All?.SendAsync("Notify", nextGeneration);
+                }
                 _logger.LogInformation("Timed Background Service is working.");
             }
         }
@@ -53,14 +57,11 @@ namespace GameOfLife.HostedService
         {
             _logger.LogInformation("Timed Background Service is stopping.");
 
-            _timer?.Change(Timeout.Infinite, 0);
-
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
         }
     }
 }

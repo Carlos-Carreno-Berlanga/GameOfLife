@@ -58,7 +58,6 @@ namespace GameOfLife.Services.Implementation
 
         public async Task SetGameStatusAsync(GameStatusDto gameStatus)
         {
-
             await _distributedCache.SetStringAsync(cacheKey, JsonConvert.SerializeObject(gameStatus));
         }
     }
